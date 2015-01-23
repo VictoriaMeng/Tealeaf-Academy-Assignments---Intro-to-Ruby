@@ -4,14 +4,14 @@ end
 
 say "Enter a number."
 num1 = gets.chomp
-until num1 == num1.to_i.to_s
+until num1 == num1.to_i.to_s || num1 == num1.to_f.to_s
     say "That's not a number! Please enter a number."
     num1 = gets.chomp
 end
 
 say "Enter a second number."
 num2 = gets.chomp
-until num2 == num2.to_i.to_s
+until num2 == num2.to_i.to_s || num2 == num2.to_f.to_s
     say "That's not a number! Please enter a number."
     num2 = gets.chomp
 end
@@ -21,7 +21,7 @@ menu.each { |k, v| say "Press '#{v}' to #{k}." }
 
 op = gets.chomp
 until op == op.to_i.to_s && op.to_i.between?(1,4) == true
-  say "Please enter a number between 1 and 4."
+  say "Please select '1', '2', '3', or '4'."
   op = gets.chomp
 end
 
