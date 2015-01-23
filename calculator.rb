@@ -25,15 +25,18 @@ until op == op.to_i.to_s && op.to_i.between?(1,4) == true
   op = gets.chomp
 end
 
+num1 = num1.to_f
+num2 = num2.to_f
+
 case op
 when '1'
-  say "#{num1.to_f} + #{num2.to_f} = #{num1.to_f + num2.to_f}"
+  say "#{num1} + #{num2} = #{num1 + num2}"
 when '2'
-  say "#{num1.to_f} - #{num2.to_f} = #{num1.to_f - num2.to_f}"
+  say "#{num1} - #{num2} = #{num1 - num2}"
 when '3'
-  say "#{num1.to_f} * #{num2.to_f} = #{num1.to_f * num2.to_f}"
+  say "#{num1} * #{num2} = #{num1 * num2}"
 when '4'
-  say "#{num1.to_f} / #{num2.to_f} = #{num1.to_f / num2.to_f}"
+  say "#{num1} / #{num2} = #{num1 / num2}"
 end
   
   
