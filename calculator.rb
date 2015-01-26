@@ -3,17 +3,17 @@ def say(msg)
 end
 
 say "Enter a number."
-num1 = gets.chomp
-until num1 == num1.to_i.to_s || num1 == num1.to_f.to_s
+number_01 = gets.chomp
+until number_01 == number_01.to_i.to_s || number_01 == number_01.to_f.to_s
     say "That's not a number! Please enter a number."
-    num1 = gets.chomp
+    number_01 = gets.chomp
 end
 
 say "Enter a second number."
-num2 = gets.chomp
-until num2 == num2.to_i.to_s || num2 == num2.to_f.to_s
+number_02 = gets.chomp
+until number_02 == number_02.to_i.to_s || number_02 == number_02.to_f.to_s
     say "That's not a number! Please enter a number."
-    num2 = gets.chomp
+    number_02 = gets.chomp
 end
 
 menu = {Add: 1, Subtract: 2, Multliply: 3, Divide: 4}
@@ -25,18 +25,18 @@ until operator == operator.to_i.to_s && operator.to_i.between?(1,4) == true
   operator = gets.chomp
 end
 
-num1 = num1.to_f
-num2 = num2.to_f
+number_01 = number_01.to_f
+number_02 = number_02.to_f
 
 case operator
 when '1'
-  say "#{num1} + #{num2} = #{num1 + num2}"
+  say "#{number_01} + #{number_02} = #{number_01 + number_02}"
 when '2'
-  say "#{num1} - #{num2} = #{num1 - num2}"
+  say "#{number_01} - #{number_02} = #{number_01 - number_02}"
 when '3'
-  say "#{num1} * #{num2} = #{num1 * num2}"
+  say "#{number_01} * #{number_02} = #{number_01 * number_02}"
 when '4'
-  say "#{num1} / #{num2} = #{num1 / num2}"
+  say "#{number_01} / #{number_02} = #{number_01 / number_02}"
 end
   
   
