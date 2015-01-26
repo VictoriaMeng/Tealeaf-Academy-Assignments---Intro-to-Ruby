@@ -25,9 +25,9 @@ loop do
   
   if player_attack == opponent_attack
     say "It's a tie!"
-  elsif (player_attack == "Rock" && opponent_attack == "Scissors") || (player_attack ==      "Paper" && opponent_attack == "Rock") || (player_attack == "Scissors" && player_attack == "Paper")
+  elsif (player_attack == "Rock" && opponent_attack == "Scissors") || (player_attack == "Paper" && opponent_attack == "Rock") || (player_attack == "Scissors" && player_attack == "Paper")
     say "You win!"
-  elsif (player_attack == "Rock" && opponent_attack == "Paper") || (player_attack ==     "Paper" && opponent_attack == "Scissors") || (player_attack == "Scissors" && player_attack == "Rock") 
+  elsif (player_attack == "Rock" && opponent_attack == "Paper") || (player_attack == "Paper" && opponent_attack == "Scissors") || (player_attack == "Scissors" && player_attack == "Rock") 
     say "You lose!"
   end
 
