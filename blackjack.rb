@@ -134,12 +134,10 @@ else
       redo
     end
   end while player_total < 21
-    # Checking If You Bust
+    # Dealer's Turn - If You Don't Bust
   if player_total > 21
     puts "That's over 21! You busted! You lose!"
-  end 
-    # If You Don't Bust, Dealer's Turn Begins
-  if player_total <= 21 && dealer_total < 17
+  elsif player_total <= 21 && dealer_total < 17
     instruct "--- Dealer's Turn ---"
     display_hand("Dealer", dealer_hand, dealer_total)
     begin
