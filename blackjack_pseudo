@@ -1,0 +1,21 @@
+# assign card values
+  # Four of each
+    # 2-10
+    # J/Q/K = 10
+    # ace = 11 OR 1, input to select which
+# assign variables for player_card_total and dealer_card_total
+  # look up method to add totals
+# set up: deal initial two cards, two to player, two to dealer
+  # Remove cards from deck as they're dealt
+  # No duplicates
+# set player_turn
+  # actions to H (hit) or S (stay)
+  # counter to bust if player_card_total or dealer_card_total > 21
+# set dealer_turn
+  # hit until dealer_card_total > 17
+  # counter to bust if player_card_total or dealer_card_total > 21
+# counter to compare player_card_total to dealer_card_todal, with higher number as winner
+# player_again option
+
+
+
