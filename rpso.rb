@@ -52,7 +52,7 @@ end
 
 class OpponentAttack < Attacks
   def pick_attack
-    @attack = @@attacks.sample
+    @attack = ATTACKS.sample
     say "Opponent picked #{@attack}."
   end
     
@@ -63,10 +63,13 @@ include Format
 begin 
   say "Let's play Rock-Paper-Scissors! Please enter R/P/S."
   input = gets.chomp
+  player = PlayerAttack.new
+  player.pick_attack(input)
   
-  player = PlayerAttack.new(input)
   opponent = OpponentAttack.new
-  RockPaperScissors.battle(player, opponent)
+  opponent.pick_attack
+  
+  Attacks.battle(player, opponent)
   
   say "Press 'Q' to quit. Press any other key to play again!"
   play_again = gets.chomp
