@@ -5,12 +5,12 @@ module Format
   
 end
 
-class RockPaperScissors
+class Attacks
   include Format
   
   attr_reader :attack
   
-  @@attacks = ["Rock", "Paper", "Scissors"]
+  ATTACKS = ["Rock", "Paper", "Scissors"]
   
   def self.battle(player, opponent)
     if player.attack == "Rock"
@@ -30,8 +30,8 @@ class RockPaperScissors
  
 end
 
-class PlayerAttack < RockPaperScissors
-  def initialize(attack)
+class PlayerAttack < Attacks
+  def pick_attack(attack)
     if attack.downcase == "r" || attack.downcase == "rock"
       say "You picked Rock."
       @attack = "Rock"
@@ -44,14 +44,14 @@ class PlayerAttack < RockPaperScissors
     else
       say "Please enter 'R', 'P', or 'S'."
       input = gets.chomp
-      initialize(input)
+      pick_attack(input)
     end
   end
 
 end
 
-class OpponentAttack < RockPaperScissors
-  def initialize
+class OpponentAttack < Attacks
+  def pick_attack
     @attack = @@attacks.sample
     say "Opponent picked #{@attack}."
   end
