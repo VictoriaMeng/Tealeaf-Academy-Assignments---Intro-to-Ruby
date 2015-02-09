@@ -31,7 +31,6 @@ class RockPaperScissors
 end
 
 class PlayerAttack < RockPaperScissors
-  
   def initialize(attack)
     if attack.downcase == "r" || attack.downcase == "rock"
       say "You picked Rock."
@@ -52,7 +51,6 @@ class PlayerAttack < RockPaperScissors
 end
 
 class OpponentAttack < RockPaperScissors
-  
   def initialize
     @attack = @@attacks.sample
     say "Opponent picked #{@attack}."
