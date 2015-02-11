@@ -8,12 +8,12 @@ end
 module Gameplay
   def player_turn
     say "Place your piece. Empty squares left: #{empty_squares.keys}"
-    input = gets.chomp
-    if empty_squares.has_key?(input.to_i) == false
+    @input = gets.chomp
+    if empty_squares.has_key?(@input.to_i) == false
       say "Make sure you picked an empty square!"
       player_turn
     end
-    @board[input.to_i] = "X"
+    @board[@input.to_i] = "X"
     draw
     check_state
   end
@@ -31,6 +31,7 @@ module Gameplay
     begin
       player_turn
       break if self.board_state == "Player won!"
+      break if self.board_state == "It's a tie!"
       opponent_turn
     end while self.board_state == "continue"
     say "#{self.board_state}"
@@ -45,6 +46,7 @@ module Gameplay
       game
     elsif
       input.downcase == "n" || input.downcase == "no"
+      say "Thanks for playing!"
     else
       say "Please enter 'Y' or 'N'!"
       play_again
@@ -62,7 +64,7 @@ class Board
   
   def initialize
     @board = {}
-    (1..9).each {|square, symbol| @board[square] = " "}
+    (1..9).each {|square, _| @board[square] = " "}
     @board_state = "continue"
   end
   
@@ -84,7 +86,7 @@ class Board
   end
 
   def empty_squares
-    @board.select {|square, symbol| symbol == " "}
+    @board.select {|_, symbol| symbol == " "}
   end
 
   def check_state
@@ -93,7 +95,7 @@ class Board
         self.board_state = "Player won!"
       elsif @board.values_at(*line).count("O") == 3
         self.board_state = "Computer won!"
-      elsif @board.has_value?(" ") == false
+      elsif !@board.has_value?(" ") && @board.values_at(*line).count("X") != 3
         self.board_state = "It's a tie!"
       end
     end
