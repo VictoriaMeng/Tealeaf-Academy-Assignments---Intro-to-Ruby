@@ -91,11 +91,11 @@ class Board
 
   def check_state
     WINNING_LINES.each do |line|
-      if @board.values_at(*line).count("X") == 3
+      if @board.values_at(*line).count("X") >= 3
         self.board_state = "Player won!"
       elsif @board.values_at(*line).count("O") == 3
         self.board_state = "Computer won!"
-      elsif !@board.has_value?(" ") && @board.values_at(*line).count("X") != 3
+      elsif !@board.has_value?(" ") && @board.values_at(*line).count("X") <= 3
         self.board_state = "It's a tie!"
       end
     end
