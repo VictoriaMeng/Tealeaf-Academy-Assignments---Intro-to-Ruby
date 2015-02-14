@@ -12,11 +12,15 @@ class Game
     @deck = Deck.new
     @player = Hand.new("Player")
     @dealer = Hand.new("Dealer")
+    full_game(@deck, @player, @dealer)
+  end
+  
+  def setup(deck, player, dealer)
     2.times do
       Card.deal(@deck, @player)
       Card.deal(@deck, @dealer)
     end
-    full_game(@deck, @player, @dealer)
+    show_hands(player, dealer)
   end
   
   def show_hands(player, dealer)
@@ -88,7 +92,7 @@ class Game
   end
   
   def full_game(deck, player, dealer)
-    show_hands(player, dealer)
+    setup(deck, player, dealer)
     if blackjack_win(player, dealer) == "true"
       play_again
     else
