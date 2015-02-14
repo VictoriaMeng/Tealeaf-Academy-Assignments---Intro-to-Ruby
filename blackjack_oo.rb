@@ -63,11 +63,11 @@ class Game
   
   def player_turn(deck, player, dealer)
     say "Your Turn"
-    show_hands(player, dealer)
     say "Hit or Stand? (H/S)"
     @input = gets.chomp
     hit_or_stand(deck, player, dealer)
     player.bust_check
+    show_hands(player, dealer) if player.bust == "false"
     player_turn(deck, player, dealer) if player.bust == "false" && @stand != "true" 
   end
 
