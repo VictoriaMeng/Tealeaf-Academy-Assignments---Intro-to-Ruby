@@ -161,9 +161,3 @@ class Hand < Card
 end
 
 game = Game.new
-
-
-
-
-
-
