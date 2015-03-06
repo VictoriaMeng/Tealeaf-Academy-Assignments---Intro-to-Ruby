@@ -90,7 +90,7 @@ get "/dealer_card" do
 	session[:dealer_hand] << session[:deck].pop
 	hand_total(session[:dealer_hand])
 	session[:game_state] = "dealer_bust" if hand_total(session[:dealer_hand]) > 21
-	if hand_total(session[:dealer_hand]) < 21
+	if hand_total(session[:dealer_hand]) <= 21
 		if (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) < hand_total(session[:player_hand]))
 			session[:game_state] = "player_win" 
 		elsif (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) >= hand_total(session[:player_hand]))
@@ -100,12 +100,3 @@ get "/dealer_card" do
 	erb :game
 end
 		
-
-
-
-
-
-
-
-
-
