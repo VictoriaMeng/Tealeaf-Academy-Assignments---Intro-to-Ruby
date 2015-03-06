@@ -22,7 +22,6 @@ helpers do
 	def get_image(card)
 		"<img src='/images/cards/#{card[1].downcase}_#{card[0][0].downcase}.jpg'>"
 	end
-
 end
 
 get '/' do
