@@ -1,0 +1,55 @@
+<h1>Blackjack</h2>
+<br />
+<h2>
+	Dealer Hand
+	<% if session[:game_state] != "player_turn" %>
+		<%= " = #{hand_total(session[:dealer_hand])}" %>
+	<% end %>
+</h2>
+<% session[:dealer_hand].each do |card| %>
+	<% if session[:game_state] != "player_turn" %>
+		<%= get_image(card) %> 
+<% end %>
+<% if session[:game_state] == "dealer_turn" %>
+	<form action="dealer_card" method="get">
+		<label><input type="submit" name="dealer_card" value="Dealer Draws a Card..." /></label>
+	</form>
+<% end %>
+<h2>Your Hand = <%= "#{hand_total(session[:player_hand])}" %></h2>
+<% session[:player_hand].each do |card| %>
+	<%= get_image(card) %>
+<% end %>
+<br />
+<% if session[:game_state] == "player_blackjack" %>
+	<strong class="game_state">You get Blackjack! YOU WIN!</strong>
+	<br />
+	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+<% elsif session[:game_state] == "dealer_blackjack" %>
+	<strong class="game_state">Dealer gets Blackjack! YOU LOSE!</strong>
+	<br />
+	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+<% elsif session[:game_state] == "player_bust" %>
+	<strong class="game_state">You busted! YOU LOSE!</strong>
+	<br />
+	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+<% elsif session[:game_state] == "dealer_bust" %>
+	<strong class="game_state">Dealer busted! YOU WIN!</strong>
+	<br />
+	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+<% elsif session[:game_state] == "player_win" %>
+	<strong class="game_state">You have <%= "#{hand_total(session[:player_hand])}" %>. Dealer has <%= "#{hand_total(session[:dealer_hand])}" %>. YOU WIN!</strong>
+	<br />
+	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+<% elsif session[:game_state] == "dealer_win" %>
+	<strong class="game_state">You have <%= "#{hand_total(session[:player_hand])}" %>. Dealer has <%= "#{hand_total(session[:dealer_hand])}" %>. YOU LOSE!</strong>
+	<br />
+	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+<% elsif session[:game_state] == "player_turn" %>
+	<form action="hit_or_stay" method="get">
+		<fieldset>
+			<center><strong>Hit or Stay?</strong>
+			<input type="submit" name="hit_or_stay" value="Hit" />
+			<input type="submit" name="hit_or_stay" value="Stay" />
+	</form>
+<% end %>
+
