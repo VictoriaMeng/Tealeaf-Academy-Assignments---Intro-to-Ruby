@@ -6,9 +6,13 @@
 		<%= " = #{hand_total(session[:dealer_hand])}" %>
 	<% end %>
 </h2>
-<% session[:dealer_hand].each do |card| %>
-	<% if session[:game_state] != "player_turn" %>
+<% if session[:game_state] != "player_turn" %>
+	<% session[:dealer_hand].each do |card| %>
 		<%= get_image(card) %> 
+	<% end %>
+<% else %>
+	<img src='/images/cards/cover.jpg' />
+	<%= "<img src='/images/cards/#{session[:dealer_hand][1][1]}_#{session[:dealer_hand][1][0][0]}.jpg'>" %>
 <% end %>
 <% if session[:game_state] == "dealer_turn" %>
 	<form action="dealer_card" method="get">

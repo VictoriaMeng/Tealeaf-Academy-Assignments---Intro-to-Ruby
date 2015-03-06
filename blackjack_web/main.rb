@@ -72,7 +72,12 @@ get "/hit_or_stay" do
 		hand_total(session[:player_hand])
 		session[:game_state] = "player_bust" if hand_total(session[:player_hand]) > 21
 	elsif params[:hit_or_stay] == "Stay"
-		session[:game_state] = "dealer_turn"
+		session[:game_state] = "dealer_turn" if hand_total(session[:dealer_hand]) < 17
+		if (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) < hand_total(session[:player_hand]))
+			session[:game_state] = "player_win" 
+		elsif (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) >= hand_total(session[:player_hand]))
+			session[:game_state] = "dealer_win"
+		end
 	end
 	erb :game
 end
@@ -84,11 +89,13 @@ end
 get "/dealer_card" do
 	session[:dealer_hand] << session[:deck].pop
 	hand_total(session[:dealer_hand])
-	if hand_total(session[:dealer_hand]) >= 17 && hand_total(session[:dealer_hand]) <= 21
-		session[:game_state] = "player_win" if hand_total(session[:player_hand]) > hand_total(session[:dealer_hand])
-		session[:game_state] = "dealer_win" if hand_total(session[:player_hand]) <= hand_total(session[:dealer_hand])
-	elsif hand_total(session[:dealer_hand]) > 21
-		session[:game_state] = "dealer_bust"
+	session[:game_state] = "dealer_bust" if hand_total(session[:dealer_hand]) > 21
+	if hand_total(session[:dealer_hand]) < 21
+		if (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) < hand_total(session[:player_hand]))
+			session[:game_state] = "player_win" 
+		elsif (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) >= hand_total(session[:player_hand]))
+			session[:game_state] = "dealer_win"
+		end
 	end
 	erb :game
 end
