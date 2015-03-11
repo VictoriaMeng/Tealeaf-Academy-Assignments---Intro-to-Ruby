@@ -6,7 +6,7 @@
 		<%= " = #{hand_total(session[:dealer_hand])}" %>
 	<% end %>
 </h2>
-<% if session[:game_state] != "player_turn" %>
+<div class="cards"><% if session[:game_state] != "player_turn" %>
 	<% session[:dealer_hand].each do |card| %>
 		<%= get_image(card) %> 
 	<% end %>
@@ -16,44 +16,71 @@
 <% end %>
 <% if session[:game_state] == "dealer_turn" %>
 	<form action="dealer_card" method="get">
-		<label><input type="submit" name="dealer_card" value="Dealer Draws a Card..." /></label>
+		<div class="btn-group">
+			<button class="btn" name="dealer_card" value="dealer_card">Dealer draws a card...</button>
+		</dv>
 	</form>
-<% end %>
-<h2>Your Hand = <%= "#{hand_total(session[:player_hand])}" %></h2>
-<% session[:player_hand].each do |card| %>
+<% end %></div>
+<h2><%= "#{session[:player_name]}" %>'s Hand = <%= "#{hand_total(session[:player_hand])}" %></h2>
+<div class="cards"><% session[:player_hand].each do |card| %>
 	<%= get_image(card) %>
-<% end %>
+<% end %></div>
 <br />
 <% if session[:game_state] == "player_blackjack" %>
-	<strong class="game_state">You get Blackjack! YOU WIN!</strong>
+	<div id="game_state">You get Blackjack! YOU WIN!</div>
 	<br />
-	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+	<form action="play_again" method="get">
+		<div class="btn-group">
+			<button class="btn" name="play_again" value="play_again">Play Again!</button>
+		</div>
+	</form>
 <% elsif session[:game_state] == "dealer_blackjack" %>
-	<strong class="game_state">Dealer gets Blackjack! YOU LOSE!</strong>
+	<div id="game_state">Dealer gets Blackjack! YOU LOSE!</div>
 	<br />
-	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+		<form action="play_again" method="get">
+		<div class="btn-group">
+			<button class="btn" name="play_again" value="play_again">Play Again!</button>
+		</div>
+	</form>
 <% elsif session[:game_state] == "player_bust" %>
-	<strong class="game_state">You busted! YOU LOSE!</strong>
+	<div id="game_state">You busted! YOU LOSE!</div>
 	<br />
-	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+	<form action="play_again" method="get">
+		<div class="btn-group">
+			<button class="btn" name="play_again" value="play_again">Play Again!</button>
+		</div>
+	</form>
 <% elsif session[:game_state] == "dealer_bust" %>
-	<strong class="game_state">Dealer busted! YOU WIN!</strong>
+	<div id="game_state">Dealer busted! YOU WIN!</div>
 	<br />
-	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+	<form action="play_again" method="get">
+		<div class="btn-group">
+			<button class="btn" name="play_again" value="play_again">Play Again!</button>
+		</div>
+	</form>
 <% elsif session[:game_state] == "player_win" %>
-	<strong class="game_state">You have <%= "#{hand_total(session[:player_hand])}" %>. Dealer has <%= "#{hand_total(session[:dealer_hand])}" %>. YOU WIN!</strong>
+	<div id="game_state">You have <%= "#{hand_total(session[:player_hand])}" %>. Dealer has <%= "#{hand_total(session[:dealer_hand])}" %>. YOU WIN!</div>
 	<br />
-	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+	<form action="play_again" method="get">
+		<div class="btn-group">
+			<button class="btn" name="play_again" value="play_again">Play Again!</button>
+		</div>
+	</form>
 <% elsif session[:game_state] == "dealer_win" %>
-	<strong class="game_state">You have <%= "#{hand_total(session[:player_hand])}" %>. Dealer has <%= "#{hand_total(session[:dealer_hand])}" %>. YOU LOSE!</strong>
+	<div id="game_state">You have <%= "#{hand_total(session[:player_hand])}" %>. Dealer has <%= "#{hand_total(session[:dealer_hand])}" %>. YOU LOSE!</div>
 	<br />
-	<form action="play_again" method="get"><input type="submit" name="play_again" value="Play Again!" /></form>
+	<form action="play_again" method="get">
+		<div class="btn-group">
+			<button class="btn" name="play_again" value="play_again">Play Again!</button>
+		</div>
+	</form>
 <% elsif session[:game_state] == "player_turn" %>
 	<form action="hit_or_stay" method="get">
 		<fieldset>
-			<center><strong>Hit or Stay?</strong>
-			<input type="submit" name="hit_or_stay" value="Hit" />
-			<input type="submit" name="hit_or_stay" value="Stay" />
+			<div class="btn-group">
+				<button class="btn" name="hit_or_stay" value="hit">Hit</button>
+				<button class="btn" name="hit_or_stay" value="stay">Stay</button>
+			</div>
 	</form>
 <% end %>
 

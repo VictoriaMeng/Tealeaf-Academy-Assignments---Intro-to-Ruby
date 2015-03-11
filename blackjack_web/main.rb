@@ -67,11 +67,11 @@ get "/game" do
 end
 
 get "/hit_or_stay" do
-	if params[:hit_or_stay] == "Hit"
+	if params[:hit_or_stay] == "hit"
 		session[:player_hand] << session[:deck].pop
 		hand_total(session[:player_hand])
 		session[:game_state] = "player_bust" if hand_total(session[:player_hand]) > 21
-	elsif params[:hit_or_stay] == "Stay"
+	elsif params[:hit_or_stay] == "stay"
 		session[:game_state] = "dealer_turn" if hand_total(session[:dealer_hand]) < 17
 		if (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) < hand_total(session[:player_hand]))
 			session[:game_state] = "player_win" 
@@ -83,7 +83,7 @@ get "/hit_or_stay" do
 end
 
 get "/play_again" do
-	redirect "/game" if params[:play_again] == "Play Again!"
+	redirect "/game" if params[:play_again] == "play_again"
 end
 
 get "/dealer_card" do
