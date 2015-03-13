@@ -1,12 +1,22 @@
-form {text-align: center;}
+form {
+	text-align: center;
+}
 
-h2 {text-align: center;}
+h2 {
+	text-align: center;
+}
 
-li.show_player {text-align: right;}
+li.show_player {
+	text-align: right;
+}
 
-.cards {text-align: center;}
+.cards {
+	text-align: center;
+}
 
-#game_state {text-align: center;
-			font-weight: bold;
-			font-size: 20px;}
+#game_state {
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+}
 

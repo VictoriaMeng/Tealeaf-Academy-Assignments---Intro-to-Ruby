@@ -82,5 +82,13 @@
 				<button class="btn" name="hit_or_stay" value="stay">Stay</button>
 			</div>
 	</form>
+<% elsif session[:game_state] == "push" %>
+	<div id="game_state">You have <%= "#{hand_total(session[:player_hand])}" %>. Dealer has <%= "#{hand_total(session[:dealer_hand])}" %>. IT'S A PUSH!</div>
+	<br />
+	<form action="play_again" method="get">
+		<div class="btn-group">
+			<button class="btn" name="play_again" value="play_again">Play Again!</button>
+		</div>
+	</form>
 <% end %>
 

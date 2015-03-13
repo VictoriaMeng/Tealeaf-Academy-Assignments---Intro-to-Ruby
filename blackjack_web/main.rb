@@ -6,6 +6,9 @@ use Rack::Session::Cookie, :key => 'rack.session',
                            :path => '/',
                            :secret => 'random_string' 
 
+ BLACKJACK_VALUE = 21
+ DEALER_STAY_VALUE = 17
+
 helpers do 
 	def hand_total(hand)
 		total = 0
@@ -13,7 +16,7 @@ helpers do
 			total += card[0][1]
 		end
 		hand.select{|card| card[0][1] == 11}.count.times do
-			break if total <= 21
+			break if total <= BLACKJACK_VALUE
 			total -= 10
 		end
 		total
@@ -57,26 +60,31 @@ get "/game" do
 		session[:dealer_hand] << session[:deck].pop
 	end
 
-	hand_total(session[:player_hand])
-	hand_total(session[:dealer_hand])
+	player_total = hand_total(session[:player_hand])
+	dealer_total = hand_total(session[:dealer_hand])
 
-	session[:game_state] = "player_blackjack" if hand_total(session[:player_hand]) == 21
-	session[:game_state] = "dealer_blackjack" if hand_total(session[:dealer_hand]) == 21
+	session[:game_state] = "player_blackjack" if player_total == BLACKJACK_VALUE
+	session[:game_state] = "dealer_blackjack" if dealer_total == BLACKJACK_VALUE
 
 	erb :game
 end
 
 get "/hit_or_stay" do
+	dealer_total = hand_total(session[:dealer_hand])
+
 	if params[:hit_or_stay] == "hit"
 		session[:player_hand] << session[:deck].pop
-		hand_total(session[:player_hand])
-		session[:game_state] = "player_bust" if hand_total(session[:player_hand]) > 21
+		player_total = hand_total(session[:player_hand])
+		session[:game_state] = "player_bust" if player_total > BLACKJACK_VALUE
 	elsif params[:hit_or_stay] == "stay"
-		session[:game_state] = "dealer_turn" if hand_total(session[:dealer_hand]) < 17
-		if (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) < hand_total(session[:player_hand]))
+		player_total = hand_total(session[:player_hand])
+		session[:game_state] = "dealer_turn" if dealer_total < DEALER_STAY_VALUE
+		if dealer_total >= DEALER_STAY_VALUE && dealer_total < player_total
 			session[:game_state] = "player_win" 
-		elsif (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) >= hand_total(session[:player_hand]))
+		elsif dealer_total >= DEALER_STAY_VALUE && dealer_total > player_total
 			session[:game_state] = "dealer_win"
+		elsif dealer_total >= DEALER_STAY_VALUE && dealer_total == player_total
+			session[:game_state] = "push"
 		end
 	end
 	erb :game
@@ -88,13 +96,18 @@ end
 
 get "/dealer_card" do
 	session[:dealer_hand] << session[:deck].pop
-	hand_total(session[:dealer_hand])
-	session[:game_state] = "dealer_bust" if hand_total(session[:dealer_hand]) > 21
-	if hand_total(session[:dealer_hand]) <= 21
-		if (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) < hand_total(session[:player_hand]))
+
+	player_total = hand_total(session[:player_hand])
+	dealer_total = hand_total(session[:dealer_hand])
+
+	session[:game_state] = "dealer_bust" if dealer_total > BLACKJACK_VALUE
+	if dealer_total <= BLACKJACK_VALUE
+		if dealer_total >= DEALER_STAY_VALUE && dealer_total < player_total
 			session[:game_state] = "player_win" 
-		elsif (hand_total(session[:dealer_hand]) >= 17) && (hand_total(session[:dealer_hand]) >= hand_total(session[:player_hand]))
+		elsif dealer_total >= DEALER_STAY_VALUE && dealer_total > player_total
 			session[:game_state] = "dealer_win"
+		elsif dealer_total >= DEALER_STAY_VALUE && dealer_total == player_total
+			session[:game_state] = "push"
 		end
 	end
 	erb :game
