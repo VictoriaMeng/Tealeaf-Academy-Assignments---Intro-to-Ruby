@@ -27,11 +27,11 @@ helpers do
 	end
 end
 
-get '/' do
+get "/" do
 	if session[:player_name].empty?
 		redirect "/name_form"
 	else
-		redirect "/game"
+		redirect "/bet"
 	end
 end
 
@@ -41,6 +41,16 @@ end
 
 post "/post_name" do
 	session[:player_name] = params[:player_name]
+	session[:money] = 500.to_f
+	redirect "/bet"
+end
+
+get "/bet" do
+	erb :bet
+end
+
+post "/make_bet" do
+	session[:bet] = params[:bet].to_f
 	redirect "/game"
 end
 
@@ -51,6 +61,7 @@ get "/game" do
 	
 	session[:deck] = cards.product(suits).shuffle!
 	session[:game_state] = "player_turn"
+	session[:player_status] = "player_solvent"
 
 	session[:player_hand] = []
 	session[:dealer_hand] = []
@@ -65,6 +76,14 @@ get "/game" do
 
 	session[:game_state] = "player_blackjack" if player_total == BLACKJACK_VALUE
 	session[:game_state] = "dealer_blackjack" if dealer_total == BLACKJACK_VALUE
+
+	if session[:game_state] == "player_blackjack"
+		session[:money] += session[:bet]*1.5
+	elsif session[:game_state] == "dealer_blackjack"
+		session[:money] -= session[:bet]*1.5
+	end
+
+	session[:player_status] = "player_broke" if session[:money] <= 0
 
 	erb :game
 end
@@ -87,11 +106,20 @@ get "/hit_or_stay" do
 			session[:game_state] = "push"
 		end
 	end
+
+	if session[:game_state] == "player_win" 
+		session[:money] += session[:bet]
+	elsif session[:game_state] == "dealer_win" || session[:game_state] == "player_bust"
+		session[:money] -= session[:bet]
+	end
+
+	session[:player_status] = "player_broke" if session[:money] <= 0
+		
 	erb :game
 end
 
 get "/play_again" do
-	redirect "/game" if params[:play_again] == "play_again"
+	redirect "/bet" if params[:play_again] == "play_again"
 end
 
 get "/dealer_card" do
@@ -107,9 +135,18 @@ get "/dealer_card" do
 		elsif dealer_total >= DEALER_STAY_VALUE && dealer_total > player_total
 			session[:game_state] = "dealer_win"
 		elsif dealer_total >= DEALER_STAY_VALUE && dealer_total == player_total
-			session[:game_state] = "push"
+			session[:game_state] = "tie"
 		end
 	end
+
+	if session[:game_state] == "player_win" || session[:game_state] == "dealer_bust"
+		session[:money] += session[:bet]
+	elsif session[:game_state] == "dealer_win"
+		session[:money] -= session[:bet]
+	end
+
+	session[:player_status] = "player_broke" if session[:money] <= 0
+
 	erb :game
 end
 		

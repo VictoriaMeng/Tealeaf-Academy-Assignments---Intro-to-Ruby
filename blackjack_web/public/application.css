@@ -10,13 +10,28 @@ li.show_player {
 	text-align: right;
 }
 
+.money { 
+	text-align: center;
+	font-weight: bold;
+}
+
+.profile {
+	text-align: right;
+	font-weight: bold;
+}
+
 .cards {
 	text-align: center;
 }
 
-#game_state {
+.result {
 	text-align: center;
 	font-weight: bold;
 	font-size: 20px;
 }
 
+#player_broke {
+	text-align: center;
+	color: red;
+	font-size: 30px;
+}
