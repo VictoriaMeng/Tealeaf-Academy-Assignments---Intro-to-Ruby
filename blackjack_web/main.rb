@@ -28,10 +28,10 @@ helpers do
 end
 
 get "/" do
-	if session[:player_name].empty?
-		redirect "/name_form"
-	else
+	if session[:player_name]
 		redirect "/bet"
+	else
+		redirect "/name_form"
 	end
 end
 
@@ -115,7 +115,7 @@ get "/hit_or_stay" do
 
 	session[:player_status] = "player_broke" if session[:money] <= 0
 		
-	erb :game
+	erb :game, layout: false
 end
 
 get "/play_again" do
@@ -147,6 +147,6 @@ get "/dealer_card" do
 
 	session[:player_status] = "player_broke" if session[:money] <= 0
 
-	erb :game
+	erb :game, layout: false
 end
 		

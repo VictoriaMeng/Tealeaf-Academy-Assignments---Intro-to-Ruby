@@ -1,3 +1,4 @@
+<div id="game">
 <h1>Blackjack</h1>
 <div class="profile">Current Bet: $<%= "#{session[:bet]}" %></div>
 <div class="profile">Total Cash: $<%= "#{session[:money]}" %></div>
@@ -16,10 +17,12 @@
 	<%= "<img src='/images/cards/#{session[:dealer_hand][1][1]}_#{session[:dealer_hand][1][0][0]}.jpg'>" %>
 <% end %>
 <% if session[:game_state] == "dealer_turn" %>
-	<form action="dealer_card" method="get">
-		<div class="btn-group">
-			<button class="btn" name="dealer_card" value="dealer_card">Dealer draws a card...</button>
-		</dv>
+	<form id="dealer_card" action="dealer_card" method="get">
+		<fieldset>
+			<div class="btn-group">
+				<button class="btn" name="dealer_card" value="dealer_card">Dealer draws a card...</button>
+			</div>
+		</fieldset>
 	</form>
 <% end %></div>
 <h2><%= "#{session[:player_name]}" %>'s Hand = <%= "#{hand_total(session[:player_hand])}" %></h2>
@@ -129,4 +132,5 @@
 		</div>
 	</form>
 <% end %>
+</div>
 
